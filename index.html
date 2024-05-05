@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<body>
+    <header>
+        <img class="HarmLogo" src="images/harmony logo trans.png" alt="">
+    </header>
+    <div class="background">
+    </div>
+    <div class="foreground">
+        <div class="top_box">
+            <div class="top_box_content">
+                <div class="heading">
+                    <div class="heading_container">
+                        <a class="hfont">Welcome, Patient!</a>
+                    </div>
+                </div>
+                <div class="paragaph">
+                    <div class="paragaph_container">
+                        <a class="pfont"> Have you prevously taken the</a>
+                    </div>
+                    <div class="accent_text">
+                        <div class="afont">
+                            <a>Hearing assessment</a>
+                            <a class="question">?</a>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="bottom_box">
+            <div class="bottom_box_content">
+                <button class="rightbutton">
+                    <a class="rbfont">yes</a>
+                </button>
+                <button class="leftbutton">
+                    <a class="lbfont">no</a>
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+<style>
+    * { 
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    html{
+        background-color: #ffec88;
+
+    }
+    header{
+        height: 12vh;
+        overflow: hidden; /* Hide any overflowing content */
+        position: relative; /* Make positioning context for absolutely positioned children */
+        margin-bottom: 2vh;
+    }
+    .HarmLogo{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: auto; /* Set the width to fill the parent container */
+        height: 100%; /* Set the height to fill the parent container */
+    }
+    .background{
+        z-index: -1; /* Places this layer above the background (which has a lower z-index by default) */
+        /* Additional styling for the foreground layer */
+        position: absolute;
+        margin: 0;
+        padding: 0;
+    }
+    .foreground{
+        width: 100%;
+        height: 100%;
+    }
+    .top_box{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .top_box_content{
+        text-align: center;
+        padding-top: 3vh;
+        width: 85%;
+        height: 30vh;
+        background-color: #194e37;
+        border-top-left-radius: 60px;
+        border-top-right-radius: 60px;
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+    }
+    .bottom_box{
+         display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .bottom_box_content{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 85%;
+        height: 20vh;
+        background-color: rgba(185, 185, 185, 0.253);
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+        border-bottom-left-radius: 60px;
+        border-bottom-right-radius: 60px;    
+    }
+    .heading{
+        display: flex;
+        justify-content: center;
+        height: 10.8vh;
+    }
+    .heading_container{
+        width: 80%;
+        height: 3vh;
+    }
+    .hfont{
+        color: grey;
+    }
+    .paragaph{
+        height: 16.2vh;
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+    .paragaph_container{
+        height: 5vh;
+        color: white;
+    }
+    .accent_text{
+        height: 5vh;
+        color: #ffec88;
+    }
+    .question{
+        color: white;
+    }
+
+    .rightbutton{
+        height: 9vh;
+        width: 16vh;
+        margin-right: 10vw;
+        border-radius: 60px;
+        border: none;
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+        padding: 20px;
+        background-color: #abb9ab;
+    }
+    .rbfont{
+        line-height: 50%;
+        color: #5d7563;
+    }
+
+    .leftbutton{
+        height: 9vh;
+        width: 16vh;
+        border-radius: 60px;
+        border: none;
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+        padding: 20px;
+        background-color: #abb9ab;
+    }
+    .lbfont{
+        line-height: 50%;
+        color: #5d7563;
+    }
+</style>
+<script>
+    function dynamicText(){
+        scaleheading()
+        scaleparagaph()
+        scalebutton()
+        function scaleheading(){
+            var headingWidth = $('.heading_container').width();
+            var headingHeight = $('.heading_container').height();
+            var headingElement = $('.hfont');
+                // Function to check if the text fits within the container
+            function headFitsContainer(hfontSize) {
+                headingElement.css('font-size', hfontSize + 'px');
+                var htextWidth = headingElement.width();
+                var htextHeight = headingElement.height();
+                return htextWidth <= headingWidth && htextHeight <= headingHeight;
+            }
+            // Binary search to find the maximum font size that fits the container
+            var hlowerBound = 1;
+            var hupperBound = headingHeight; // Set an initial upper bound to the container height
+            while (hlowerBound < hupperBound - 1) {
+            var hmidSize = Math.floor((hlowerBound + hupperBound) / 2);
+            if (headFitsContainer(hmidSize)) {
+                hlowerBound = hmidSize;
+            } else {
+                hupperBound = hmidSize;
+                }
+            }
+            headingElement.css('font-size', hlowerBound + 'px');
+        }
+        function scaleparagaph(){
+            var paragaphWidth = $('.paragaph_container').width();
+            var paragaphHeight = $('.paragaph_container').height();
+            var pfont = $('.pfont');
+            var afont = $('.afont');
+            // Function to check if the text fits within the container
+            function paragaphFitsContainer(pfontSize) {
+                pfont.css('font-size', pfontSize + 'px');
+                var ptextWidth = pfont.width();
+                var ptextHeight = pfont.height();
+                return ptextWidth <= paragaphWidth && ptextHeight <= paragaphHeight;
+            }
+            // Binary search to find the maximum font size that fits the container
+            var plowerBound = 1;
+            var pupperBound = paragaphHeight; // Set an initial upper bound to the container height
+            while (plowerBound < pupperBound - 1) {
+            var pmidSize = Math.floor((plowerBound + pupperBound) / 2);
+            if (paragaphFitsContainer(pmidSize)) {
+                plowerBound = pmidSize;
+            } else {
+                pupperBound = pmidSize;
+                }
+            }
+            pfont.css('font-size', plowerBound + 'px');
+            afont.css('font-size', plowerBound + 'px');
+        }
+        function scalebutton(){
+            var buttonWidth = $('.rightbutton').width();
+            var buttonHeight = $('.rightbutton').height();
+            var lbuttonElement = $('.rbfont');
+            var rbuttonElement = $('.lbfont');
+                // Function to check if the text fits within the container
+            function buttonFitsContainer(bfontSize) {
+                lbuttonElement.css('font-size', bfontSize + 'px');
+                var btextWidth = lbuttonElement.width();
+                var btextHeight = lbuttonElement.height();
+                return btextWidth <= buttonWidth && btextHeight <= buttonHeight;
+            }
+            // Binary search to find the maximum font size that fits the container
+            var blowerBound = 1;
+            var bupperBound = buttonHeight; // Set an initial upper bound to the container height
+            while (blowerBound < bupperBound - 1) {
+            var bmidSize = Math.floor((blowerBound + bupperBound) / 2);
+            if (buttonFitsContainer(bmidSize)) {
+                blowerBound = bmidSize;
+            } else {
+                bupperBound = bmidSize;
+            }
+        }
+            // Set the font size to the lower bound (maximum that fits the container)
+            lbuttonElement.css('font-size', blowerBound + 'px');
+            rbuttonElement.css('font-size', blowerBound + 'px');
+        }
+    }
+      // Call the function on document ready to scale the text initially
+      $(document).ready(dynamicText);
+      $(window).resize(dynamicText);
+</script>
+</html>

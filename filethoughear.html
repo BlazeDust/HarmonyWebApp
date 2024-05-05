@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Audio Player - Left Ear Only</title>
+</head>
+<body>
+    <form action="">
+        <input type="radio" name="choose" value="0" id="left" onclick="updateOutput(this.value)">
+        <label for="left">left ear</label>
+        <input type="radio" name="choose" value="1" id="right" onclick="updateOutput(this.value)">
+        <label for="right">right ear</label>
+    </form>
+    <select id="Dropdown"  onchange="updateOutput()">
+      <option value="-1" selected>Select easr</option>
+      <option value="0">left ear</option>
+      <option value="1">right ear</option>
+    </select>
+  <audio id="audioPlayer" controls>
+    <source src="Audio/250hz30sec.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
+  <script>
+    function updateOutput(value) {
+         div = document.getElementById('Dropdown');
+         i = parseFloat(div.value, 10);
+         alert(i);
+    }
+    document.getElementById('audioPlayer').addEventListener('play', function() {
+        // Get the audio element
+        var audioElement = this;
+        // Hook into the audio context and split the audio to left and right channels
+        var audioContext = new AudioContext();
+        var splitter = audioContext.createChannelSplitter(2);
+        var merger = audioContext.createChannelMerger(2);
+        // Connect the audio element to the splitter
+        var source = audioContext.createMediaElementSource(audioElement);
+        source.connect(splitter);
+        // Connect the left channel to the output
+        splitter.connect(merger, i, i); // splitter.connect(merger, 1, 1) for right ear
+        // Connect the left channel to the audio context
+        audioContext.destination.disconnect();
+        merger.connect(audioContext.destination, 0, 0);
+      });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

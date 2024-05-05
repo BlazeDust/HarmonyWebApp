@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Counter App</title>
+</head>
+<body>
+  <div>
+    <h1 id="counter">00:00:00</h1>
+    <button onclick="startCounter()">Start</button>
+    <button onclick="stopCounter()">Stop</button>
+    <button onclick="resetCounter()">Reset</button>
+  </div>
+  <script>
+    let intervalId;
+let seconds = 0;
+let minutes = 0;
+let hours = 0;
+
+function startCounter() {
+  intervalId = setInterval(updateCounter, 1000);
+}
+
+function updateCounter() {
+  seconds++;
+  if (seconds === 60) {
+    seconds = 0;
+    minutes++;
+    if (minutes === 60) {
+      minutes = 0;
+      hours++;
+    }
+  }
+
+  const displayHours = hours < 10 ? `0${hours}` : hours;
+  const displayMinutes = minutes < 10 ? `0${minutes}` : minutes;
+  const displaySeconds = seconds < 10 ? `0${seconds}` : seconds;
+
+  document.getElementById('counter').innerText = `${displayHours}:${displayMinutes}:${displaySeconds}`;
+}
+
+function stopCounter() {
+  clearInterval(intervalId);
+}
+
+function resetCounter() {
+  clearInterval(intervalId);
+  seconds = 0;
+  minutes = 0;
+  hours = 0;
+  document.getElementById('counter').innerText = '00:00:00';
+}
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Decibel Reader</title>
+</head>
+<body>
+  <h1>Decibel Reader</h1>
+  <div id="decibelDisplay">0 dB</div>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const decibelDisplay = document.getElementById('decibelDisplay');
+
+      navigator.mediaDevices.getUserMedia({ audio: true })
+        .then((stream) => {
+          const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+          const analyser = audioContext.createAnalyser();
+          const microphone = audioContext.createMediaStreamSource(stream);
+
+          microphone.connect(analyser);
+          analyser.connect(audioContext.destination);
+
+          analyser.fftSize = 256;
+          const bufferLength = analyser.frequencyBinCount;
+          const dataArray = new Uint8Array(bufferLength);
+
+          function updateDecibel() {
+            analyser.getByteFrequencyData(dataArray);
+
+            // Calculate average amplitude
+            let sum = 0;
+            for (let i = 0; i < bufferLength; i++) {
+              sum += dataArray[i];
+            }
+            const averageAmplitude = sum / bufferLength;
+
+            // Map amplitude to decibel scale (adjust the factor for your use case)
+            const decibel = 20 * Math.log10(averageAmplitude / 255);
+
+            // Update display
+            decibelDisplay.textContent = `${decibel.toFixed(2)} dB`;
+
+            requestAnimationFrame(updateDecibel);
+          }
+
+          updateDecibel();
+        })
+        .catch((error) => {
+          console.error('Error accessing microphone:', error);
+        });
+    });
+  </script>
+</body>
+</html>

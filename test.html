@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Audio Volume Ascender</title>
+</head>
+<body>
+  <button onclick="playAudio()">Play Audio</button>
+  <button onclick="stopAudio()">Stop Audio</button>
+  <span id="volumeDisplay">Volume: 0.00001%</span>
+  <audio id="L250WAV" src="Audio/L250hz.wav"></audio>
+  <audio id="R250WAV" src="Audio/R250hz.wav"></audio>
+  <audio id="L500WAV" src="Audio/L500hz.wav"></audio>
+  <audio id="R500WAV" src="Audio/R500hz.wav"></audio>
+  <audio id="L1000WAV" src="Audio/L1000hz.wav"></audio>
+  <audio id="R1000WAV" src="Audio/R1000hz.wav"></audio>
+  <audio id="L2000WAV" src="Audio/L2000hz.wav"></audio>
+  <audio id="R2000WAV" src="Audio/R2000hz.wav"></audio>
+  <audio id="L4000WAV" src="Audio/L4000hz.wav"></audio>
+  <audio id="R4000WAV" src="Audio/R4000hz.wav"></audio>
+  <audio id="L8000WAV" src="Audio/L8000hz.wav"></audio>
+  <audio id="R8000WAV" src="Audio/R8000hz.wav"></audio>
+  <script>
+    volume = 0.00001; // Start at 0.00001 (0.001%)
+    const Aud = ["L250WAV", "L500WAV", "L1000WAV", "L2000WAV", "L4000WAV", "L8000WAV", "R250WAV", "R500WAV", "R1000WAV", "R2000WAV", "R4000WAV", "R8000WAV"];
+    test_count = 0;
+    counter();
+    function counter(){
+        if (test_count < 11){
+            audio = document.getElementById(Aud[test_count]);
+            test_count++;
+        };
+    };
+function playAudio() {
+  audio.volume = volume;
+  audio.play();
+  interval = setInterval(() => {
+    volumeDisplay = document.getElementById('volumeDisplay');
+    volumeDisplay.innerText = volume;
+      volume += 0.00001; // Increase volume by 0.00001 (0.001%)
+      audio.volume = volume;
+  }, 250); // Increase volume every quarter second (250 milliseconds)
+}
+function stopAudio() {
+    clearInterval(interval);
+    audio.pause();
+    audio.currentTime = 0; // Reset audio to start
+    // Capture and alert the volume percentage
+    const volumePercentage = (volume * 100).toFixed(5);
+    // Reset volume to the initial value
+    volume = 0.00001;
+    counter();
+  }
+  </script>
+  
+</body>
+</html>

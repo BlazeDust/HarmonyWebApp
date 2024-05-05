@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Audio Player</title>
+</head>
+<body>
+    <button onclick="playAudio()">Play Audio</button>
+    <audio id="L250WAV" src="Audio/L250hz.wav"></audio>
+    <audio id="R250WAV" src="Audio/R250hz.wav"></audio>
+    <audio id="L500WAV" src="Audio/L500hz.wav"></audio>
+    <audio id="R500WAV" src="Audio/R500hz.wav"></audio>
+    <audio id="L1000WAV" src="Audio/L1000hz.wav"></audio>
+    <audio id="R1000WAV" src="Audio/R1000hz.wav"></audio>
+    <audio id="L2000WAV" src="Audio/L2000hz.wav"></audio>
+    <audio id="R2000WAV" src="Audio/R2000hz.wav"></audio>
+    <audio id="L4000WAV" src="Audio/L4000hz.wav"></audio>
+    <audio id="R4000WAV" src="Audio/R4000hz.wav"></audio>
+    <audio id="L8000WAV" src="Audio/L8000hz.wav"></audio>
+    <audio id="R8000WAV" src="Audio/R8000hz.wav"></audio>
+
+<script>
+    volume = 0.00001; // Start at 0.00001 (0.001%)
+    audio = document.getElementById("R250WAV");
+    function playAudio() {
+        audio.volume = volume;
+        audio.play();
+    };
+</script>
+</body>
+</html>
